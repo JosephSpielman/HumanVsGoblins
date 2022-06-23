@@ -85,11 +85,10 @@ public class Humanoid {
     public boolean isDead(){
         if(this.getHp()<=0)
         {
-
             System.out.print("This "+getClass().getSimpleName()+" has died!");
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     public int dealDamage(){

@@ -2,18 +2,41 @@ import Creatures.Goblin;
 import Creatures.Knight;
 import Game.Board;
 import Game.Land;
+import Inventory.*;
+
 
 public class App {
     public static void main(String[] args) {
         Knight k= new Knight();
         Goblin g = new Goblin();
-        String[][] gameBoard = Board.generateBoard(new Land(),10,10);
+        Goblin g2 = new Goblin();
+        Goblin g3 = new Goblin();
+
+        //
+        System.out.println(k.toString());
+        k.setEquipmentSlot1(new Item("Broadsword",2,0,"Standard Issue sword","buffs"));
+        k.calcItemStats(k.getEquipmentSlot1());
+        k.setEquipmentSlot2(new Item("Broadsword",2,0,"Standard Issue sword","buffs"));
+        k.calcItemStats(k.getEquipmentSlot2());
+        k.setEquipmentSlot3(new Item("Broadsword",2,0,"Standard Issue sword","buffs"));
+        k.calcItemStats(k.getEquipmentSlot3());
+
+
+        System.out.println(g.toString());
+        System.out.println();
+        System.out.println(g2.toString());
+        System.out.println();
+        System.out.println(g3.toString());
+        System.out.println();
+
+
+        String[][] gameBoard = Board.generateBoard(new Land(),6,4,k,g);
         Board.displayBoard(gameBoard);
         System.out.println();
-        Board.movePiece(k,gameBoard,1);
+        gameBoard[2][2]="\uD83C\uDF81";
         Board.displayBoard(gameBoard);
+
         System.out.println();
-        Board.movePiece(g,gameBoard,1);
         Board.displayBoard(gameBoard);
 
 
