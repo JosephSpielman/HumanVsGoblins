@@ -1,61 +1,47 @@
-import Creatures.Goblin;
-import Creatures.Knight;
-import Game.Board;
-import Game.Land;
-import Inventory.*;
-
+import Creatures.*;
+import Game.*;
 
 public class App {
     public static void main(String[] args) {
-        Knight k= new Knight();
-        Goblin g = new Goblin();
-        Goblin g2 = new Goblin();
-        Goblin g3 = new Goblin();
-
-        //
-        System.out.println(k.toString());
-        k.setEquipmentSlot1(new Item("Broadsword",2,0,"Standard Issue sword","buffs"));
-        k.calcItemStats(k.getEquipmentSlot1());
-        k.setEquipmentSlot2(new Item("Broadsword",2,0,"Standard Issue sword","buffs"));
-        k.calcItemStats(k.getEquipmentSlot2());
-        k.setEquipmentSlot3(new Item("Broadsword",2,0,"Standard Issue sword","buffs"));
-        k.calcItemStats(k.getEquipmentSlot3());
+        Knight player = new Knight();
+        Goblin enemy = new Goblin();
+        int row = 8;
+        int column = 8;
+        String[][] gameBoard = Board.generateBoard(new Land(), row, column, player, enemy);
 
 
-        System.out.println(g.toString());
-        System.out.println();
-        System.out.println(g2.toString());
-        System.out.println();
-        System.out.println(g3.toString());
-        System.out.println();
+        boolean inGame = true;
+        boolean gameRunning = true;
+        while (gameRunning) {
+            enemy.generatePlacement(row,column);
+            Board.setPosition(gameBoard,enemy);
+            gameBoard = Board.generateBoard(new Land(), row, column, player, enemy);
+            Board.displayBoard(gameBoard);
+            boolean moving = true;
+            while(moving){
+             Board.movePiece(gameBoard,player);
+                System.out.println();
+                Board.displayBoard(gameBoard);
+                System.out.println();
+                Board.goblinMove(gameBoard,enemy,player);
+                Board.displayBoard(gameBoard);
+                if(Board.startBattle(player,enemy)){
+                    moving = false;}
 
+            }
+            while(!player.isDead()&&!enemy.isDead()) {
+                player.attack(enemy);
+                enemy.attack(player);
 
-        String[][] gameBoard = Board.generateBoard(new Land(),6,4,k,g);
-        Board.displayBoard(gameBoard);
-        System.out.println();
-        gameBoard[2][2]="\uD83C\uDF81";
-        Board.displayBoard(gameBoard);
-
-        System.out.println();
-        Board.displayBoard(gameBoard);
-
-
-
-
-
-
-
-
-        /*
-        do{
-            g.attack(k);
-            k.attack(g);
-            System.out.println("Creatures.Goblin HP: "+g.getHp());
-            System.out.println("Creatures.Knight HP: "+k.getHp());
+            }
+            if(enemy.isDead()){
+                enemy.giveTreasure(player);
+                enemy = new Goblin();
+            } else if (player.isDead()) {
+                System.out.println("YOU HAVE FAILED!!!!!!");
+                gameRunning = false;
+            }
 
         }
-        while(g.isDead() && k.isDead());
-    }
-    */
     }
 }

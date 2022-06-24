@@ -1,5 +1,6 @@
 package Creatures;
 
+import Game.Board;
 import Inventory.*;
 
 import java.util.Random;
@@ -10,22 +11,35 @@ public class Goblin extends Humanoid{
     Loot treasure;
 
     public Goblin(){
-        super(2,5,7,0,2,"\uD83D\uDC79");
+        super(2,10,7,0,7,"\uD83D\uDC79");
         generateGoblinTreasure();
     }
     public Goblin(int strength, int hp, int armorClass, int posRow, int posColumn,String displayValue,Loot loot) {
         super(strength, hp, armorClass, posRow, posColumn,displayValue);
-
     }
-
     public Loot getTreasure() {
         return treasure;
     }
-
     public void setTreasure(Loot treasure) {
         this.treasure = treasure;
     }
+    public void giveTreasure(Knight k){
+        System.out.println("You take the goblins treasure:" );
+        System.out.println(this.treasure.cleanDescription());
+        k.getLoot().add(this.treasure);
+    }
 
+    public void upgradeGoblin(){
+        this.strength += 4;
+        this.hp +=5;
+        this.armorClass +=5;
+    }
+
+    public void generatePlacement(int row,int col){
+        Random rnd = new Random();
+        this.setPosRow(rnd.nextInt(row));
+        this.setPosColumn(rnd.nextInt(col));
+    }
     public void generateGoblinTreasure(){
         Random rnd = new Random();
         int roll = rnd.nextInt(6);
@@ -47,8 +61,6 @@ public class Goblin extends Humanoid{
         }
         this.treasure =new Loot("Diamond",500,"You hit the jackpot!");
     }
-
-
     @Override
     public String toString() {
         return "Goblin{" +

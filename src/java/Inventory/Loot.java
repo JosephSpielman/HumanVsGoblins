@@ -1,9 +1,7 @@
 package Inventory;
-
 import Creatures.Goblin;
-
 import java.util.Random;
-//"\uD83C\uDF81"
+
 public class Loot {
     String name;
     int value;
@@ -48,5 +46,12 @@ public class Loot {
                 ", value=" + value +
                 ", description='" + description + '\'' +
                 '}';
+    }
+    public String cleanDescription(){
+        return "[Name: "+this.name+" |Value: "+this.value+" |Description: "+this.description+"]";
+    }
+
+    public String lootSummary(){
+        return "";
     }
 }

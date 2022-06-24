@@ -53,5 +53,17 @@ public class Item {
     public void setApplyTo(String applyTo) {
         this.applyTo = applyTo;
     }
-
+    @Override
+    public String toString() {
+        return "Item{" +
+                "name='" + name + '\'' +
+                ", bonus=" + bonus +
+                ", curse=" + curse +
+                ", description='" + description + '\'' +
+                ", applyTo='" + applyTo + '\'' +
+                '}';
+    }
+    public String cleanDescription(){
+        return "[Name: "+this.name+" |Bonus: "+(this.bonus-this.curse)+" |Description: "+this.description+"]";
+    }
 }

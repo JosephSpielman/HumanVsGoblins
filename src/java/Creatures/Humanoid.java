@@ -70,8 +70,8 @@ public class Humanoid {
         Random rnd = new Random();
         int accuracy = rnd.nextInt(21);
         if(accuracy>h.getArmorClass()){
-            System.out.println("Your attack hits its the target!");
-            //System.out.println("Your attack hits its the "+h.getClassType()+"!");
+            System.out.println("The "+this.getClass().getSimpleName()+" strikes the "+h.getClass().getSimpleName()+"!");
+            System.out.println("It deals "+dealDamage()+ " points of damage.");
             h.setHp(h.getHp()-dealDamage());
             return;
         } else if (accuracy ==0) {
@@ -79,7 +79,7 @@ public class Humanoid {
             this.hp -= this.strength;
             return;
         }
-        System.out.println("Your opponent deftly dodges your strike.");
+        System.out.println("The "+h.getClass().getSimpleName()+" deftly dodges the strike.");
     }
 
     public boolean isDead(){
