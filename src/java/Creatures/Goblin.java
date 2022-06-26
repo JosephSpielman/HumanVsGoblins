@@ -30,9 +30,11 @@ public class Goblin extends Humanoid{
     }
 
     public void upgradeGoblin(){
+        System.out.println("A Goblin General has appeared!");
         this.strength += 4;
         this.hp +=5;
         this.armorClass +=5;
+        this.treasure = new Loot("General's Badge",100,"Proof of a goblin general's demise");
     }
 
     public void generatePlacement(int row,int col){
@@ -61,16 +63,9 @@ public class Goblin extends Humanoid{
         }
         this.treasure =new Loot("Diamond",500,"You hit the jackpot!");
     }
+
     @Override
-    public String toString() {
-        return "Goblin{" +
-                "treasure=" + treasure +
-                ", strength=" + strength +
-                ", hp=" + hp +
-                ", armorClass=" + armorClass +
-                ", posRow=" + posRow +
-                ", posColumn=" + posColumn +
-                ", displayValue='" + displayValue + '\'' +
-                '}';
+    public String toString(){
+        return this.displayValue;
     }
 }

@@ -4,19 +4,18 @@ import Inventory.Loot;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.stream.Stream;
 
 public class Knight extends Humanoid{
     int buffs;
     Item equipmentSlot1;
-    Item equipmentSlot2;
-    Item equipmentSlot3;
+
     ArrayList<Loot> loot = new ArrayList<>();
 
     public Knight(){
-        super(5,20,10,5,3,"\uD83D\uDDE1");
+        super(5,25,10,5,3,"\uD83D\uDDE1");
         this.buffs =0;
         this.equipmentSlot1 = new Item("Iron Sword",1,0,"Standard Issue Knight's sword","buffs");
+        calcItemStats(equipmentSlot1);
     }
 
     public Item getEquipmentSlot1() {
@@ -27,21 +26,6 @@ public class Knight extends Humanoid{
         this.equipmentSlot1 = equipmentSlot1;
     }
 
-    public Item getEquipmentSlot2() {
-        return equipmentSlot2;
-    }
-
-    public void setEquipmentSlot2(Item equipmentSlot2) {
-        this.equipmentSlot2 = equipmentSlot2;
-    }
-
-    public Item getEquipmentSlot3() {
-        return equipmentSlot3;
-    }
-
-    public void setEquipmentSlot3(Item equipmentSlot3) {
-        this.equipmentSlot3 = equipmentSlot3;
-    }
 
     public ArrayList<Loot> getLoot() {
         return loot;
@@ -59,15 +43,15 @@ public class Knight extends Humanoid{
         this.buffs = buffs;
     }
 
-    public Boolean checkIfEquipmentFull(){
-        return this.getEquipmentSlot1() == null;
-    }
+
     @Override
     public int dealDamage() {
 
         return this.strength+this.buffs;
     }
-    public void replaceEquipment(Item in){
+    public void healForBoss(){
+        System.out.println("The knight catches his breath for the battle! |HP+5|");
+        this.hp +=5;
 
     }
     public void calcItemStats(Item in){
@@ -109,18 +93,25 @@ public class Knight extends Humanoid{
             }
         }while(!valid);
     }
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName()+"{" +
-                "buffs=" + buffs +
-                ", strength=" + strength +
-                ", hp=" + hp +
-                ", armorClass=" + armorClass +
-                ", posRow=" + posRow +
-                ", posColumn=" + posColumn +
-                '}';
+     @Override
+     public String toString(){
+         return this.displayValue;
     }
     public void displayLoot(){
-        Stream.of(loot).forEach(System.out::println);
+         int sum = 0;
+        System.out.println("The knight collected:");
+        for (Loot l: this.loot){
+            System.out.println(l.getName()+". "+l.getDescription());
+            sum += l.getValue();
+        }
+        if(this.equipmentSlot1.getName().equals("Golden Sword")){
+            System.out.println("Golden Sword. It didn't help in life but at least it can be smelted down.");
+            sum+= 300;
+        }
+        System.out.println("For a total of "+sum+" gold!");
+    }
+    @Override
+    public String displayStats(){
+         return super.displayStats()+"|Buffs: "+this.buffs;
     }
 }

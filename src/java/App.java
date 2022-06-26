@@ -1,47 +1,71 @@
 import Creatures.*;
 import Game.*;
 
+import java.util.Scanner;
+
 public class App {
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
         Knight player = new Knight();
         Goblin enemy = new Goblin();
+        Chest chest = new Chest();
         int row = 8;
         int column = 8;
-        String[][] gameBoard = Board.generateBoard(new Land(), row, column, player, enemy);
+        int round =1;
+        Object[][] objectBoard = new Object[row][column];
 
-
-        boolean inGame = true;
+        Board.openingMessage();
         boolean gameRunning = true;
         while (gameRunning) {
             enemy.generatePlacement(row,column);
-            Board.setPosition(gameBoard,enemy);
-            gameBoard = Board.generateBoard(new Land(), row, column, player, enemy);
-            Board.displayBoard(gameBoard);
+            Board.setPosition(objectBoard,enemy);
+            objectBoard = Board.generateObjectBoard(new Land(), row, column, player, enemy);
+            if(round >1) {
+                chest.setChestColumn(0);
+                chest.setChestRow(0);
+                chest.generateEquipment();
+                Board.setChest(objectBoard, chest);
+            }
+            if(round %3 ==0){
+                enemy.upgradeGoblin();
+                player.healForBoss();
+            }
+            Board.displayObjectBoard(objectBoard);
             boolean moving = true;
             while(moving){
-             Board.movePiece(gameBoard,player);
+                Board.movePiece(objectBoard,player);
+                System.out.println(player.displayStats());
+                System.out.println(enemy.displayStats());
+                Board.displayObjectBoard(objectBoard);
                 System.out.println();
-                Board.displayBoard(gameBoard);
-                System.out.println();
-                Board.goblinMove(gameBoard,enemy,player);
-                Board.displayBoard(gameBoard);
+                Board.openTreasureChest(player,chest);
+                if(Board.startBattle(player,enemy)){
+                    moving = false;
+                    continue;
+                }
+                Board.goblinMove(objectBoard,enemy,player);
+                Board.displayObjectBoard(objectBoard);
                 if(Board.startBattle(player,enemy)){
                     moving = false;}
-
             }
+            System.out.println("-----Prepare for combat!-----");
             while(!player.isDead()&&!enemy.isDead()) {
                 player.attack(enemy);
                 enemy.attack(player);
-
+                System.out.println("Press any key to continue combat.");
+                sc.nextLine();
             }
             if(enemy.isDead()){
+                System.out.println("The Goblin has died!");
                 enemy.giveTreasure(player);
                 enemy = new Goblin();
-            } else if (player.isDead()) {
-                System.out.println("YOU HAVE FAILED!!!!!!");
+                round++;
+            }
+            if (player.isDead()) {
+                System.out.println("-----The knight's journey has come to an end!-----");
+                player.displayLoot();
                 gameRunning = false;
             }
-
         }
     }
 }

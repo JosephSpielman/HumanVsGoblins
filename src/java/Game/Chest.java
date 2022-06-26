@@ -56,7 +56,7 @@ public class Chest extends Land {
         Random rnd = new Random();
         int roll = rnd.nextInt(6);
         if (roll <= 1) {
-            this.equipment = new Item("Rusty Knife", 1, 0, "A Simple rusty knife.", "buffs");
+            this.equipment = new Item("Sharp Dagger", 2, 0, "A quicker alternative.", "buffs");
             return;
         }
         if (roll == 2) {
@@ -94,14 +94,7 @@ public class Chest extends Land {
             }
         }while(!valid);
     }
-    @Override
-    public String toString() {
-        return "Chest{" +
-                "equipment=" + equipment.toString() +
-                ", chestRow=" + chestRow +
-                ", chestColumn=" + chestColumn +
-                ", name='" + name + '\'' +
-                ", displayValue='" + displayValue + '\'' +
-                '}';
+    public  String toString(){
+       return this.displayValue;
     }
 }

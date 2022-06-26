@@ -64,8 +64,6 @@ public class Humanoid {
     public void setDisplayValue(String displayValue){this.displayValue =displayValue;}
 
 
-
-
     public void attack(Humanoid h) {
         Random rnd = new Random();
         int accuracy = rnd.nextInt(21);
@@ -75,7 +73,7 @@ public class Humanoid {
             h.setHp(h.getHp()-dealDamage());
             return;
         } else if (accuracy ==0) {
-            System.out.println("Critical miss! You suffer "+this.strength+" points of damage.");
+            System.out.println("Critical miss! "+this.getClass().getSimpleName()+" hurts themself for "+this.strength+" points of damage.");
             this.hp -= this.strength;
             return;
         }
@@ -83,12 +81,7 @@ public class Humanoid {
     }
 
     public boolean isDead(){
-        if(this.getHp()<=0)
-        {
-            System.out.print("This "+getClass().getSimpleName()+" has died!");
-            return true;
-        }
-        return false;
+        return this.getHp() <= 0;
     }
 
     public int dealDamage(){
@@ -107,5 +100,9 @@ public class Humanoid {
                 ", posRow=" + posRow +
                 ", posColumn=" + posColumn +
                 '}';
+    }
+
+    public String displayStats(){
+        return this.getClass().getSimpleName()+"|Health: "+this.hp+"|Armor: "+this.armorClass+"|";
     }
 }
