@@ -19,6 +19,8 @@ public class Humanoid {
         this.displayValue = displayValue;
     }
 
+    public Humanoid(){}
+
     public int getStrength() {
         return strength;
     }
@@ -73,7 +75,7 @@ public class Humanoid {
             h.setHp(h.getHp()-dealDamage());
             return;
         } else if (accuracy ==0) {
-            System.out.println("Critical miss! "+this.getClass().getSimpleName()+" hurts themself for "+this.strength+" points of damage.");
+            System.out.println("Critical miss! "+this.getClass().getSimpleName()+" hurts itself for "+this.strength+" points of damage.");
             this.hp -= this.strength;
             return;
         }
@@ -88,9 +90,7 @@ public class Humanoid {
          return this.strength;
     }
 
-    public String getClassType(){
-        return this.getClass().getSimpleName();
-    }
+
     @Override
     public String toString() {
         return this.getClass().getSimpleName()+" {" +

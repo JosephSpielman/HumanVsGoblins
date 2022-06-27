@@ -29,10 +29,6 @@ public class Board {
              }
          }
     }
-    public static void reDraw(String[][] board,Knight k,Goblin g){
-         board[k.getPosRow()][k.getPosColumn()]=k.getDisplayValue();
-         board[g.getPosRow()][g.getPosColumn()]=g.getDisplayValue();
-    }
 
     public static boolean startBattle(Knight k,Goblin g){
         return(k.getPosColumn() == g.getPosColumn() && k.getPosRow() == g.getPosRow());
@@ -66,6 +62,7 @@ public class Board {
         int kRow = k.getPosRow();
         boolean getMove = true;
         gameBoard[gobRow][gobCol] = new Land();
+        System.out.println("The Goblin Advances.");
         while(getMove){
             if(gobCol>kCol){
                 g.setPosColumn(gobCol-1);
